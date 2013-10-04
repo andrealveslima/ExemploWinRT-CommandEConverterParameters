@@ -1,0 +1,35 @@
+﻿<Page x:Class="CommandEConverterParameters.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:CommandEConverterParameters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:converters="using:WinRTConverters.Visibility"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="100">
+            <ToggleSwitch x:Name="TextBlockToogle"
+                          IsOn="True"/>
+            <TextBlock Text="Texto a ser mostrado"
+                       Style="{StaticResource HeaderTextBlockStyle}"
+                       Visibility="{Binding ElementName=TextBlockToogle, Path=IsOn, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Text="Texto a ser escondido"
+                       Style="{StaticResource HeaderTextBlockStyle}">
+                <TextBlock.Visibility>
+                    <Binding ElementName="TextBlockToogle"
+                             Path="IsOn"
+                             Converter="{StaticResource BooleanToVisibilityConverter}">
+                        <Binding.ConverterParameter>
+                            <x:Boolean>True</x:Boolean>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </TextBlock.Visibility>
+            </TextBlock>
+            <Button Content="Mostrar Mensagem"
+                    Margin="0,300,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page>
