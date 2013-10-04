@@ -8,6 +8,7 @@
       mc:Ignorable="d">
     <Page.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:MostrarMensagemCommand x:Key="MostrarMensagemCommand" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Margin="100">
@@ -28,8 +29,29 @@
                     </Binding>
                 </TextBlock.Visibility>
             </TextBlock>
-            <Button Content="Mostrar Mensagem"
-                    Margin="0,300,0,0"/>
+            <Button Content="Mostrar Mensagem estática"
+                    Margin="0,100,0,0"
+                    Command="{StaticResource MostrarMensagemCommand}">
+                <Button.CommandParameter>
+                    <local:MostrarMensagemParameters Titulo="Título da mensagem"
+                                                     Mensagem="Conteúdo da mensagem" />
+                </Button.CommandParameter>
+            </Button>
+            <TextBox x:Name="TituloMensagemTextBox"
+                     Width="300"
+                     HorizontalAlignment="Left"
+                     Margin="0,100,0,0"/>
+            <TextBox x:Name="ConteudoMensagemTextBox"
+                     Width="300"
+                     HorizontalAlignment="Left" 
+                     Margin="0,5,0,0"/>
+            <Button Content="Mostrar Mensagem dinâmica"
+                    Command="{StaticResource MostrarMensagemCommand}">
+                <Button.CommandParameter>
+                    <local:MostrarMensagemParameters Titulo="{Binding ElementName=TituloMensagemTextBox, Path=Text}"
+                                                     Mensagem="{Binding ElementName=ConteudoMensagemTextBox, Path=Text}" />
+                </Button.CommandParameter>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>
